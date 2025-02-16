@@ -1,81 +1,102 @@
-import { useEffect } from 'react';
-import { Keyboard } from 'lucide-react';
-import Link from 'next/link';
+import { motion } from 'motion/react';
+import { GetStaticProps } from 'next';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Footer from './components/footer';
+import CaseStudyCard from './components/case-study-card';
+import { useState } from 'react';
 
-export default function Home({ useCases }) {
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      switch(event.key) {
-        case '1':
-          window.location.href = '/use-cases/research';
-          break;
-        case '2':
-          window.location.href = '/use-cases/wireframing';
-          break;
-        case '3':
-          window.location.href = '/use-cases/testing';
-          break;
-      }
-    };
+// Types
+interface CaseStudy {
+  slug: string;
+  title: string;
+  description: string;
+  content: string;
+}
 
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, []);
+interface HomeProps {
+  caseStudies: CaseStudy[];
+}
+
+const ParentComponent = ({ caseStudies }) => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const handleExpand = (index: number) => {
+      setExpandedIndex(expandedIndex === index ? null : index); // Toggle the current index
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold text-center mb-8">Digital Product Design Use Cases</h1>
-        
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {useCases.map((useCase, index) => (
-            <Link href={`/use-cases/${useCase.slug}`} key={useCase.slug}>
-              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow p-6 border border-gray-200">
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-xl font-semibold">{useCase.title}</h2>
-                    <span className="flex items-center text-sm text-gray-500">
-                      <Keyboard className="w-4 h-4 mr-1" />
-                      {index + 1}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600">{useCase.description}</p>
-                </div>
-                <p className="text-sm text-gray-600">{useCase.excerpt}</p>
+      <section className="py-20 px-8 bg-white">
+          <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-bold mb-12 text-center">Case Studies</h2>
+              <div className="space-y-6">
+                  {caseStudies.map((study, index) => (
+                      <CaseStudyCard 
+                          key={study.slug} 
+                          study={study} 
+                          index={index} 
+                          isExpanded={expandedIndex === index} // Check if this card is expanded
+                          onExpand={() => handleExpand(index)} // Pass down the handler
+                      />
+                  ))}
               </div>
-            </Link>
-          ))}
+          </div>
+      </section>
+  );
+};
+
+// Main Page Component
+export default function Home({ caseStudies }: HomeProps) {
+  return (
+    <main className="min-h-screen bg-gray-50">
+      {/* Landing Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600"
+      >
+        <div className="text-center text-white">
+          <h1 className="text-6xl font-bold mb-4">John Doe</h1>
+          <p className="text-xl">Full Stack Developer & Designer</p>
         </div>
-      </main>
-    </div>
+      </motion.section>
+
+      {/* Introduction Section */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="py-20 px-8 max-w-4xl mx-auto"
+      >
+        <h2 className="text-4xl font-bold mb-8">About Me</h2>
+        <p className="text-lg text-gray-700 leading-relaxed">
+          I'm a passionate developer with experience in building modern web applications.
+          My focus is on creating intuitive and performant user experiences using
+          cutting-edge technologies.
+        </p>
+      </motion.section>
+
+      {/* Case Studies Grid */}
+        <ParentComponent caseStudies={caseStudies} />
+      <Footer />
+    </main>
   );
 }
 
-export async function getStaticProps() {
-  const useCases = [
-    {
-      slug: 'research',
-      title: 'User Research',
-      description: 'Understanding user needs and behaviors',
-      excerpt: 'Learn effective methods for conducting user research and synthesizing findings.'
-    },
-    {
-      slug: 'wireframing',
-      title: 'Wireframing',
-      description: 'Creating low-fidelity prototypes',
-      excerpt: 'Explore techniques for rapid prototyping and iteration of design concepts.'
-    },
-    {
-      slug: 'testing',
-      title: 'Usability Testing',
-      description: 'Validating design decisions',
-      excerpt: 'Discover best practices for conducting usability tests and gathering feedback.'
-    }
-  ];
-  
+export const getStaticProps: GetStaticProps = async () => {
+  const files = fs.readdirSync(path.join('content/case-studies'));
+  const caseStudies = files.map(filename => {
+      const slug = filename.replace('.md', '');
+      const markdownWithMeta = fs.readFileSync(path.join('content/case-studies', filename), 'utf-8');
+      const { data } = matter(markdownWithMeta);
+      return { slug, ...data };
+  });
+
   return {
-    props: {
-      useCases
-    }
+      props: {
+          caseStudies,
+      },
   };
-}
+};
