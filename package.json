@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/space-mono": "^5.1.2",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.3",

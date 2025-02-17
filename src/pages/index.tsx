@@ -6,6 +6,7 @@ import matter from 'gray-matter';
 import Footer from './components/footer';
 import CaseStudyCard from './components/case-study-card';
 import { useState } from 'react';
+import "@fontsource/space-mono";
 
 // Types
 interface CaseStudy {
@@ -27,9 +28,8 @@ const ParentComponent = ({ caseStudies }) => {
   };
 
   return (
-      <section className="py-20 px-8 bg-white">
+      <section className="py-20 px-8">
           <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl font-bold mb-12 text-center">Case Studies</h2>
               <div className="space-y-6">
                   {caseStudies.map((study, index) => (
                       <CaseStudyCard 
@@ -49,37 +49,36 @@ const ParentComponent = ({ caseStudies }) => {
 // Main Page Component
 export default function Home({ caseStudies }: HomeProps) {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-100">
       {/* Landing Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600"
+        className="py-24 max-w-4xl mx-auto h-fit flex items-center justify-center"
       >
-        <div className="text-center text-white">
-          <h1 className="text-6xl font-bold mb-4">John Doe</h1>
-          <p className="text-xl">Full Stack Developer & Designer</p>
-        </div>
+        <h1 className="text-4xl leading-relaxed">
+        Building revolutionary experiences where emerging tech meets human potential
+        </h1>
       </motion.section>
+
+      {/* Case Studies Section */}
+      <ParentComponent caseStudies={caseStudies} />
 
       {/* Introduction Section */}
       <motion.section 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="py-20 px-8 max-w-4xl mx-auto"
+        className="py-24 max-w-4xl mx-auto"
       >
-        <h2 className="text-4xl font-bold mb-8">About Me</h2>
-        <p className="text-lg text-gray-700 leading-relaxed">
+        <h3 className="text-4xl text-gray-700 leading-relaxed">
           I'm a passionate developer with experience in building modern web applications.
           My focus is on creating intuitive and performant user experiences using
           cutting-edge technologies.
-        </p>
+        </h3>
       </motion.section>
 
-      {/* Case Studies Grid */}
-        <ParentComponent caseStudies={caseStudies} />
       <Footer />
     </main>
   );

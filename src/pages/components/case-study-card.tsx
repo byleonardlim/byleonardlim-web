@@ -33,18 +33,18 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study, index, isExpanded,
                     onExpand();
                 }
             }}
-            className={`p-8 rounded-lg border border-gray-100 cursor-pointer transition-all duration-300 ${
+            className={`p-8 rounded-lg border border-gray-300 cursor-pointer transition-all duration-300 ${
                 isExpanded ? 'bg-gray-100 drop-shadow-2xl' : ''
             }`}
         >
          <div className="flex-col items-center">
-                <p className="flex-row items-center text-s font-bold">
+                <p className="flex-row items-center text-3xl font-bold">
                     <Link 
                         href={`/case-study/${study.slug}`}
                     >
                         {study.title}
                     </Link>
-                    <ArrowUpRight className='ml-4 inline-block w-5 h-5' />
+                    <ArrowUpRight className='ml-4 inline-block w-6 h-6' />
                     </p> 
                 </div>  
           <AnimatePresence>
@@ -56,7 +56,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study, index, isExpanded,
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <p className="mt-6 mb-8 text-lg text-gray-700">{study.description}</p>
+                <p className="mt-6 mb-8 text-md text-gray-700">{study.description}</p>
               </motion.div>
             )}
           </AnimatePresence>

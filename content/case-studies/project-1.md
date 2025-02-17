@@ -1,5 +1,5 @@
 ---
-title: "E-commerce Platform Redesign 1"
+title: "From Hours to Minutes: Reimagining Knowledge Discovery"
 description: "A complete overhaul of an existing e-commerce platform focusing on user experience and performance"
 ---
 
