@@ -6,7 +6,7 @@ import matter from 'gray-matter';
 import Footer from './components/footer';
 import CaseStudyCard from './components/case-study-card';
 import { useState } from 'react';
-import "@fontsource/space-mono";
+import "@fontsource-variable/jetbrains-mono";
 
 // Types
 interface CaseStudy {
@@ -55,29 +55,15 @@ export default function Home({ caseStudies }: HomeProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="py-24 max-w-4xl mx-auto h-fit flex items-center justify-center"
+        className="p-8 lg:py-24 max-w-4xl mx-auto h-fit flex items-center justify-center"
       >
-        <h1 className="text-4xl leading-relaxed">
-        Building revolutionary experiences where emerging tech meets human potential
+        <h1 className="text-2xl lg:text-3xl leading-relaxed">
+        Meet Leonard — a tech enthusiast who geeks out over Spatial Computing and AI when most people are still figuring out their smartphone settings. When he's not designing sleek digital products that solve real problems, you'll find him deep in code, building the future rather than just talking about it.
         </h1>
       </motion.section>
 
       {/* Case Studies Section */}
       <ParentComponent caseStudies={caseStudies} />
-
-      {/* Introduction Section */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="py-24 max-w-4xl mx-auto"
-      >
-        <h3 className="text-4xl text-gray-700 leading-relaxed">
-          I'm a passionate developer with experience in building modern web applications.
-          My focus is on creating intuitive and performant user experiences using
-          cutting-edge technologies.
-        </h3>
-      </motion.section>
 
       <Footer />
     </main>

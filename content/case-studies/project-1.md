@@ -1,18 +1,29 @@
 ---
-title: "From Hours to Minutes: Reimagining Knowledge Discovery"
-description: "A complete overhaul of an existing e-commerce platform focusing on user experience and performance"
+title: "Quick-Draw Reporting: From Raw Data to Readable in Record Time"
+description: "Dive into Allison's journey from report-writing drudgery to deadline-crushing confidence, as smart tools transform her insights into client-ready gold."
 ---
 
-## Overview
-This project involved redesigning and rebuilding an existing e-commerce platform
-to improve user experience, performance, and conversion rates.
+![Test Image](/assets/images/case-studies/project-1/test-image.png)
 
-## Challenge
-The existing platform was built on legacy technology and suffered from poor
-performance and user experience issues...
+### Details
+The Allison featured in this story is a fictional character navigating very real challenges. As an independent AI Experience Designer on the product team, I've white-labeled all presentations and masked actual information—but the problems solved and value delivered are 100% authentic.
+
+## Meet Allison
+Allison's blank document stares back at her, the cursor blinking like a timer counting down billable hours. "Where should I start gathering all these findings?" she wonders, five minutes into what's becoming a frustrating standoff with her report draft.
+
+This isn't just Allison's problem. Across audit firms, professionals drown in information scattered across platforms, formats, and folders — client details here, meeting notes there, evidence documents somewhere else entirely. Every fragment contains potential gold for the final report, but mining and refining it? That's where the real work begins.
+
+Before any client sees a polished finding, audit teams typically burn a full day of laser-focused effort just assembling a readable first draft—hours spent hunting, gathering, and crafting.
+
+![Test Image](/assets/images/case-studies/project-1/test-image.png)
+
+## Prep, Draft, Deliver
+
 
 ## Solution
 We implemented a modern tech stack using Next.js, TypeScript, and...
+
+![Test Image](/assets/images/case-studies/project-1/test-image.png)
 
 ## Results
 - 40% improvement in page load times

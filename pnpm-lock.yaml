@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/jetbrains-mono':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@fontsource/space-mono':
         specifier: ^5.1.2
         version: 5.1.2
@@ -113,6 +116,9 @@ packages:
   '@eslint/plugin-kit@0.2.5':
     resolution: {integrity: sha512-lB05FkqEdUg2AA0xEbUz0SnkXT1LcCTa438W4IWTUh4hdOnVbQyOJ81OrDXsJk/LSiJHubgGEFoR5EHq1NsH1A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource-variable/jetbrains-mono@5.2.5':
+    resolution: {integrity: sha512-G3sN1xq1moZd0JL+hFaA4MEdsiQS+JXC/z7m+EqA5/Fzn5CQlXGUaaNKFGQdDsFuLTnCfW0KOOSWHjygNfjEPw==}
 
   '@fontsource/space-mono@5.1.2':
     resolution: {integrity: sha512-4EtHA1IZQ8hI7Gyc0hP3gPEZUfet4oqUg722J8WD8TalHwxvsy5sNQw0i08TDMu5gZjkLOtp5wPVScx+l9iSiw==}
@@ -2161,6 +2167,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.10.0
       levn: 0.4.1
+
+  '@fontsource-variable/jetbrains-mono@5.2.5': {}
 
   '@fontsource/space-mono@5.1.2': {}
 
