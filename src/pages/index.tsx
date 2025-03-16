@@ -58,7 +58,7 @@ export default function Home({ caseStudies }: HomeProps) {
         className="p-8 lg:py-24 max-w-4xl mx-auto h-fit flex items-center justify-center"
       >
         <h1 className="text-2xl lg:text-3xl leading-relaxed">
-        Meet Leonard — a tech enthusiast who geeks out over Spatial Computing and AI when most people are still figuring out their smartphone settings. When he's not designing sleek digital products that solve real problems, you'll find him deep in code, building the future rather than just talking about it.
+        Meet Leonard: a tech enthusiast who geeks out over Spatial Computing and AI, always exploring tomorrow's technologies before they hit the mainstream. When he's not designing sleek digital products that solve real problems, you'll find him deep in code, building the future rather than just talking about it.
         </h1>
       </motion.section>
 

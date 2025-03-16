@@ -21,50 +21,93 @@ const SectionedMarkdown = ({ content }) => {
   // Split content by h2 headings
   const sections = content.split(/(?=^## )/gm);
   
+  // Store notes section separately
+  let notesSection = null;
+  const mainSections = [];
+  
+  sections.forEach((section, index) => {
+    if (!section.trim()) return;
+    
+    if (!section.startsWith('## ')) {
+      // This is content before any heading (intro content)
+      mainSections.push({
+        type: 'intro',
+        content: section,
+        index
+      });
+      return;
+    }
+    
+    // Extract the heading and content
+    const headingMatch = section.match(/^## (.*?)$/m);
+    const headingText = headingMatch ? headingMatch[1].trim() : '';
+    const sectionContent = section.replace(/^## .*?$/m, '').trim();
+    
+    // Check if it's a notes section
+    const isNotesSection = headingText.toLowerCase().includes('notes');
+    
+    if (isNotesSection) {
+      notesSection = {
+        type: 'notes',
+        heading: headingText,
+        content: sectionContent,
+        index
+      };
+    } else {
+      mainSections.push({
+        type: 'section',
+        heading: headingText,
+        content: sectionContent,
+        index
+      });
+    }
+  });
+  
   return (
-    <div className="mt-8">
-      {sections.map((section, index) => {
-        if (!section.trim()) return null;
-        
-        if (!section.startsWith('## ')) {
-          // This is content before any heading
-          return (
-            <div key={`intro-${index}`} className="mb-8">
-              <ReactMarkdown components={MarkdownComponents}>
-                {section}
-              </ReactMarkdown>
-            </div>
-          );
-        }
-        
-        // Extract the heading and content
-        const headingMatch = section.match(/^## (.*?)$/m);
-        const headingText = headingMatch ? headingMatch[1].trim() : '';
-        const sectionContent = section.replace(/^## .*?$/m, '').trim();
-        
-        // Check if it's a notes section
-        const isNotesSection = headingText.toLowerCase().includes('notes');
-        
-        return (
-          <section 
-            key={`section-${index}`} 
-            className={`mb-8 ${isNotesSection ? 'border border-brown-600 p-6 rounded-lg' : ''}`}
-          >
-            <h2 
-                className={`text-lg font-bold mb-4 ${
-                  isNotesSection ? 'text-brown-600' : ''
-                }`}
-              >
-                {headingText}
-            </h2>
-              <div className={`text-md leading-relaxed ${ isNotesSection ? 'text-sm text-brown-600' : '' }`}>
+    <div className="flex flex-col lg:flex-row gap-8 mt-8">
+      {/* Main content column */}
+      <div className="lg:w-2/3">
+        {mainSections.map((section) => {
+          if (section.type === 'intro') {
+            return (
+              <div key={`intro-${section.index}`} className="mb-8">
                 <ReactMarkdown components={MarkdownComponents}>
-                  {sectionContent}
+                  {section.content}
                 </ReactMarkdown>
               </div>
-          </section>
-        );
-      })}
+            );
+          } else {
+            return (
+              <section key={`section-${section.index}`} className="mb-8">
+                <h2 className="text-lg font-bold mb-4">
+                  {section.heading}
+                </h2>
+                <div className="text-md leading-relaxed">
+                  <ReactMarkdown components={MarkdownComponents}>
+                    {section.content}
+                  </ReactMarkdown>
+                </div>
+              </section>
+            );
+          }
+        })}
+      </div>
+      
+      {/* Notes column (sticky) */}
+      {notesSection && (
+        <div className="lg:w-1/3 order-first lg:order-last">
+          <div className="sticky top-8 border border-gray-200 rounded-lg p-6 bg-gray-50">
+            <h2 className="text-lg font-bold mb-4 text-gray-700">
+              {notesSection.heading}
+            </h2>
+            <div className="text-sm text-gray-600 leading-relaxed">
+              <ReactMarkdown components={MarkdownComponents}>
+                {notesSection.content}
+              </ReactMarkdown>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -230,7 +273,7 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
         variants={pageVariants}
         className="min-h-screen bg-white"
       >
-        <div className="max-w-4xl mx-auto px-8 py-20">
+        <div className="max-w-6xl mx-auto px-8 py-20">
           {/* Back to Home Link */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -259,7 +302,7 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
             transition={{ duration: 0.6 }}
           >
             <div className="mb-8 pb-4">
-              <h1 className="text-4xl font-bold text-gray-900">{study.title}</h1>
+              <h1 className="text-4xl font-bold text-gray-900 uppercase">{study.title}</h1>
             </div>
             <div className="text-lg">
               <SectionedMarkdown content={study.content} />
