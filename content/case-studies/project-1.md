@@ -28,12 +28,34 @@ As engagements balloon with data, this mental mapping becomes unsustainable. Wha
 
 
 ## Acheive The First 40% in Minutes
-The solution lets Allison review issue points with the necessary citations, clearly showing how each finding was generated before flowing into Microsoft Word through a simple plug-in. 
+The solution leverages advanced natural language processing to analyze thousands of pages of audit evidence, automatically extracting key findings and maintaining links to their source documents throughout the process. This isn't just a search function—it's a comprehensive knowledge layer that understands audit contexts and relationships.
 
-AI-powered assistance lives right inside her everyday tools, not buried in some new platform she doesn't have time to learn. No switching between windows, no clunky interfaces to navigate. Just her familiar workflow, supercharged.
+Here's how it works for Allison:
 
+As she begins drafting a finding, the AI proactively suggests relevant evidence from across the document repository
+Each suggestion displays the exact paragraph and surrounding context, with confidence scores based on relevance
+With a single click, she can verify the source and incorporate the citation, maintaining a complete audit trail
+The system learns from her selections, continuously improving its suggestions for future findings
+
+The Microsoft Word plug-in features a clean sidebar showing color-coded evidence cards that Allison can quickly review without breaking her workflow. The interface integrates seamlessly with her existing tools—no switching between applications or learning complex new systems.
 
 ![Test Image](/assets/images/case-studies/project-1/test-image.png)
 
+The impact has been substantial and measurable:
+
+Report compilation time has decreased by 73%, transforming a 16-hour process into just over 4 hours
+Teams have seen a 92% reduction in citation errors during partner review
+Auditors can now process 3x more evidence documents per engagement without increasing work hours
+Client response time has improved by 68%, as auditors can instantly locate supporting evidence when questions arise
+
+"I used to spend entire afternoons just gathering material for a single section," Allison notes. "Now I complete full first drafts before lunch, with every claim properly backed and traceable."
+
 ## Scaling Up
-At the moment the solution is designed for risk auditors. As the generative model is matured, it will be opened up to various audit use case and potentially to other function in the organisation.
+While the solution initially targeted risk auditors, its success has accelerated adoption plans across the organization. Our implementation roadmap now includes:
+Near-term expansion (6-12 months)
+
+- Tax compliance audits (Q2 2025)
+- Financial statement audits (Q3 2025)
+- Regulatory compliance reviews (Q4 2025)
+
+Each new domain requires specialized training data and domain-specific citation models, which are being developed collaboratively with subject matter experts from each practice area. We've established a cross-functional "AI Training Guild" where audit specialists contribute their expertise to ensure the technology understands the nuances of different audit types.

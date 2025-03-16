@@ -79,7 +79,7 @@ const SectionedMarkdown = ({ content }) => {
           } else {
             return (
               <section key={`section-${section.index}`} className="mb-8">
-                <h2 className="text-lg font-bold mb-4">
+                <h2 className="text-lg font-bold mb-4 uppercase">
                   {section.heading}
                 </h2>
                 <div className="text-md leading-relaxed">
@@ -97,7 +97,7 @@ const SectionedMarkdown = ({ content }) => {
       {notesSection && (
         <div className="lg:w-1/3 order-first lg:order-last">
           <div className="sticky top-8 border border-gray-200 rounded-lg p-6 bg-gray-50">
-            <h2 className="text-lg font-bold mb-4 text-gray-700">
+            <h2 className="text-lg font-bold mb-4 text-gray-700 uppercase">
               {notesSection.heading}
             </h2>
             <div className="text-sm text-gray-600 leading-relaxed">
