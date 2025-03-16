@@ -17,6 +17,57 @@ interface BaseProps {
   [key: string]: any; // Allow additional props
 }
 
+const SectionedMarkdown = ({ content }) => {
+  // Split content by h2 headings
+  const sections = content.split(/(?=^## )/gm);
+  
+  return (
+    <div className="sectioned-content">
+      {sections.map((section, index) => {
+        if (!section.trim()) return null;
+        
+        if (!section.startsWith('## ')) {
+          // This is content before any heading
+          return (
+            <div key={`intro-${index}`} className="section-intro">
+              <ReactMarkdown components={MarkdownComponents}>
+                {section}
+              </ReactMarkdown>
+            </div>
+          );
+        }
+        
+        // Extract the heading and content
+        const headingMatch = section.match(/^## (.*?)$/m);
+        const headingText = headingMatch ? headingMatch[1].trim() : '';
+        const sectionContent = section.replace(/^## .*?$/m, '').trim();
+        
+        // Check if it's a details section
+        const isDetailsSection = headingText.toLowerCase().includes('details');
+        
+        return (
+          <div 
+            key={`section-${index}`} 
+            className={`content-section ${isDetailsSection ? 'details-section' : ''}`}
+          >
+            <h2 
+              className={`section-heading ${isDetailsSection ? 'details-heading' : ''}`}
+              data-section-type={isDetailsSection ? 'details' : 'standard'}
+            >
+              {headingText}
+            </h2>
+            <div className="section-content">
+              <ReactMarkdown components={MarkdownComponents}>
+                {sectionContent}
+              </ReactMarkdown>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 // Base styled component
 const StyledComponent = memo(({ className, children, ...props }: { className: string; children: React.ReactNode }) => (
   <div className={className} {...props}>
@@ -71,28 +122,6 @@ const MarkdownComponents = {
     <h1 className="text-3xl lg:text-4xl font-bold mt-8 mb-4 leading-relaxed" {...props} />
   )),
 
-  h2: memo<React.HTMLAttributes<HTMLHeadingElement>>((props) => {
-    if (!props.children) return null;
-
-    const headingText = extractTextContent(props.children).toLowerCase();
-    const isDetailsSection = headingText.includes('details');
-    const { className, ...rest } = props;
-
-    const combinedClassName = [
-      'text-2xl lg:text-3xl font-bold mt-8 mb-4 leading-relaxed',
-      isDetailsSection && 'bg-yellow-100 px-4 py-2 rounded-t-lg',
-      className
-    ].filter(Boolean).join(' ');
-
-    return (
-      <h2 
-        className={combinedClassName}
-        data-section-type={isDetailsSection ? 'details' : undefined}
-        {...rest}
-      />
-    );
-  }),
-  
   h3: memo<React.HTMLAttributes<HTMLHeadingElement>>((props) => (
     <h3 className="text-xl lg:text-2xl font-bold mt-6 mb-3 leading-relaxed" {...props} />
   )),
@@ -226,7 +255,7 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
           >
             <h1 className="text-3xl lg:text-4xl font-bold mb-8">{study.title}</h1>
             <div className="prose prose-lg max-w-none">
-              <ReactMarkdown components={MarkdownComponents}>{study.content}</ReactMarkdown>
+              <SectionedMarkdown content={study.content} />
             </div>
           </motion.div>
 
