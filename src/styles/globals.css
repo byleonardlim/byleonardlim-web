@@ -12,3 +12,10 @@ body {
   background: var(--background);
   font-family: 'JetBrains Mono Variable', monospace;
 }
+
+/* Add this to globals.css */
+h2[data-section-type="details"] ~ p:not(h2 ~ h2 ~ p),
+h2[data-section-type="details"] ~ ul:not(h2 ~ h2 ~ ul),
+h2[data-section-type="details"] ~ ol:not(h2 ~ h2 ~ ol) {
+  @apply bg-yellow-50 px-4 py-2;
+}
