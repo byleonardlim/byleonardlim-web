@@ -5,7 +5,7 @@ description: "Dive into Allison's journey from report-writing drudgery to deadli
 
 ![Test Image](/assets/images/case-studies/project-1/test-image.png)
 
-## Details
+## Notes
 The Allison featured in this story is a fictional character navigating very real challenges. As an independent AI Experience Designer on the product team, I've white-labeled all presentations and masked actual information—but the problems solved and value delivered are 100% authentic.
 
 ## Meet Allison

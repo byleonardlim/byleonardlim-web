@@ -22,14 +22,14 @@ const SectionedMarkdown = ({ content }) => {
   const sections = content.split(/(?=^## )/gm);
   
   return (
-    <div className="sectioned-content">
+    <div className="mt-8">
       {sections.map((section, index) => {
         if (!section.trim()) return null;
         
         if (!section.startsWith('## ')) {
           // This is content before any heading
           return (
-            <div key={`intro-${index}`} className="section-intro">
+            <div key={`intro-${index}`} className="mb-8">
               <ReactMarkdown components={MarkdownComponents}>
                 {section}
               </ReactMarkdown>
@@ -42,26 +42,27 @@ const SectionedMarkdown = ({ content }) => {
         const headingText = headingMatch ? headingMatch[1].trim() : '';
         const sectionContent = section.replace(/^## .*?$/m, '').trim();
         
-        // Check if it's a details section
-        const isDetailsSection = headingText.toLowerCase().includes('details');
+        // Check if it's a notes section
+        const isNotesSection = headingText.toLowerCase().includes('notes');
         
         return (
-          <div 
+          <section 
             key={`section-${index}`} 
-            className={`content-section ${isDetailsSection ? 'details-section' : ''}`}
+            className={`mb-8 ${isNotesSection ? 'border border-brown-600 p-6 rounded-lg' : ''}`}
           >
             <h2 
-              className={`section-heading ${isDetailsSection ? 'details-heading' : ''}`}
-              data-section-type={isDetailsSection ? 'details' : 'standard'}
-            >
-              {headingText}
+                className={`text-lg font-bold mb-4 ${
+                  isNotesSection ? 'text-brown-600' : ''
+                }`}
+              >
+                {headingText}
             </h2>
-            <div className="section-content">
-              <ReactMarkdown components={MarkdownComponents}>
-                {sectionContent}
-              </ReactMarkdown>
-            </div>
-          </div>
+              <div className={`text-md leading-relaxed ${ isNotesSection ? 'text-sm text-brown-600' : '' }`}>
+                <ReactMarkdown components={MarkdownComponents}>
+                  {sectionContent}
+                </ReactMarkdown>
+              </div>
+          </section>
         );
       })}
     </div>
@@ -97,7 +98,7 @@ const MarkdownImage = memo(({ node, src, alt, ...props }: { node: any; src: stri
   const normalizedSrc = normalizeImageUrl(src);
 
   return (
-    <div className="w-full aspect-[16/9] sm:aspect-[3/2] md:aspect-[16/9] relative my-8 rounded-md border border-gray-300">
+    <figure className="w-full aspect-[16/9] sm:aspect-[3/2] md:aspect-[16/9] relative my-8 rounded-md border border-gray-300">
       <Image 
         src={normalizedSrc}
         alt={alt || 'Case study image'}
@@ -107,7 +108,7 @@ const MarkdownImage = memo(({ node, src, alt, ...props }: { node: any; src: stri
         className="rounded-lg object-contain transition-all duration-300"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
       />
-    </div>
+    </figure>
   );
 });
 
@@ -117,47 +118,53 @@ MarkdownImage.displayName = 'MarkdownImage';
 const MarkdownComponents = {
   img: MarkdownImage,
   
-  // Style headings
   h1: memo<React.HTMLAttributes<HTMLHeadingElement>>((props) => (
-    <h1 className="text-3xl lg:text-4xl font-bold mt-8 mb-4 leading-relaxed" {...props} />
+    <h1 className="text-4xl font-bold mt-8 mb-4 leading-relaxed" {...props} />
   )),
 
   h3: memo<React.HTMLAttributes<HTMLHeadingElement>>((props) => (
-    <h3 className="text-xl lg:text-2xl font-bold mt-6 mb-3 leading-relaxed" {...props} />
+    <h3 className="text-xl font-bold mt-6 mb-3 leading-relaxed" {...props} />
   )),
 
-  // Style paragraphs
-  p: memo((props: BaseProps) => <div className="my-4 text-gray-700 leading-relaxed" {...props} />),
+  p: memo((props: BaseProps) => (
+    <div className="my-4 text-gray-700 leading-relaxed" {...props} />
+  )),
 
-  // Style lists
-  ul: memo((props: BaseProps) => <ul className="list-disc list-inside my-4 space-y-2" {...props} />),
-  ol: memo((props: BaseProps) => <ol className="list-decimal list-inside my-4 space-y-2" {...props} />),
+  ul: memo((props: BaseProps) => (
+    <ul className="list-disc list-inside my-4 leading-relaxed" {...props} />
+  )),
+  
+  ol: memo((props: BaseProps) => (
+    <ol className="list-decimal list-inside my-4 leading-relaxed" {...props} />
+  )),
 
-  // Style links
   a: memo(React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>((props, ref) => (
-    <a ref={ref} className="text-blue-600 hover:text-blue-800 underline" {...props} />
+    <a ref={ref} className="text-blue-600 underline cursor-pointer hover:text-blue-800" {...props} />
   ))),
 
-  // Style code blocks
   code: memo(({ inline, ...props }: BaseProps & { inline?: boolean }) => (
     inline ? 
       <code className="bg-gray-100 px-1 py-0.5 rounded" {...props} /> :
       <code className="block bg-gray-100 p-4 rounded-lg my-4 overflow-x-auto" {...props} />
   )),
 
-  // Style blockquotes
   blockquote: memo(React.forwardRef<HTMLQuoteElement, React.BlockquoteHTMLAttributes<HTMLQuoteElement>>((props, ref) => (
     <blockquote ref={ref} className="border-l-4 border-gray-300 pl-4 my-4 italic" {...props} />
   ))),
 
-  // Style tables
   table: memo((props: BaseProps) => (
     <div className="overflow-x-auto my-8">
-      <table className="min-w-full divide-y divide-gray-200" {...props} />
+      <table className="min-w-full border-separate border-spacing-0" {...props} />
     </div>
   )),
-  th: memo((props: BaseProps) => <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />),
-  td: memo((props: BaseProps) => <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500" {...props} />),
+  
+  th: memo((props: BaseProps) => (
+    <th className="p-6 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />
+  )),
+  
+  td: memo((props: BaseProps) => (
+    <td className="p-6 whitespace-nowrap text-sm text-gray-500" {...props} />
+  )),
 };
 
 export { MarkdownComponents };
@@ -177,7 +184,7 @@ interface CaseStudyProps {
 
 export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProps) {
   const router = useRouter();
-
+  
   // Page transition variants
   const pageVariants = {
     initial: (direction: number) => ({
@@ -204,14 +211,12 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
 
   // Navigation handler with direction
   const handleNavigation = useCallback(async (path: string, direction: number) => {
-    // Update the direction in URL state
     await router.push({
       pathname: path,
       query: { direction }
     }, path);
   }, [router]);
 
-  // Get the direction from URL or default to 0
   const direction = parseInt(router.query.direction as string) || 0;
 
   return (
@@ -253,8 +258,10 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl lg:text-4xl font-bold mb-8">{study.title}</h1>
-            <div className="prose prose-lg max-w-none">
+            <div className="mb-8 pb-4">
+              <h1 className="text-4xl font-bold text-gray-900">{study.title}</h1>
+            </div>
+            <div className="text-lg">
               <SectionedMarkdown content={study.content} />
             </div>
           </motion.div>
@@ -273,8 +280,8 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
                     <MoveLeft className="w-6 h-6" />
                   </motion.div>
                   <div className="flex flex-col items-start">
-                    <span className="text-sm text-gray-500">Previous</span>
-                    <span className="font-medium">{prevStudy.title}</span>
+                    <span className="text-xs text-gray-500">Previous</span>
+                    <span className="text-sm truncate">{prevStudy.title}</span>
                   </div>
                 </button>
               )}
@@ -287,8 +294,8 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
                   className="group flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <div className="flex flex-col items-end">
-                    <span className="text-sm text-gray-500">Next</span>
-                    <span className="font-medium">{nextStudy.title}</span>
+                    <span className="text-xs text-gray-500">Next</span>
+                    <span className="text-sm truncate">{nextStudy.title}</span>
                   </div>
                   <motion.div
                     whileHover={{ x: 4 }}
