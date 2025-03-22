@@ -6,7 +6,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import ReactMarkdown from 'react-markdown';
 import Footer from '../components/footer';
-import { ArrowLeft, HomeIcon, MoveLeft, MoveRight } from 'lucide-react';
+import { ArrowLeft, HomeIcon, MoveLeft, MoveRight, Asterisk } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
@@ -173,9 +173,44 @@ const MarkdownComponents = {
     <div className="my-4 text-gray-700 leading-relaxed" {...props} />
   )),
 
+
   ul: memo((props: BaseProps) => (
-    <ul className="list-disc list-inside my-4 leading-relaxed" {...props} />
+    <ul className="my-8 space-y-4 list-none" {...props} />
   )),
+  
+  li: memo((props: BaseProps) => {
+    const text = typeof props.children === 'string' 
+      ? props.children 
+      : JSON.stringify(props.children);
+    const hashCode = text.split('').reduce((h, c) => (h + c.charCodeAt(0)) % 5, 0);
+    
+    return (
+      <motion.li 
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ 
+          duration: 0.4, 
+          delay: hashCode * 0.1,
+          ease: [0.25, 0.1, 0.25, 1.0]
+        }}
+        className="group"
+      >
+        <motion.div
+          className="p-4 bg-gray-50 border border-gray-200 rounded-lg transition-all duration-300"
+        >
+          <div className="flex items-start">
+            <div className="flex-shrink-0 mr-3">
+              <Asterisk className="w-6 h-6 text-black" />
+            </div>
+            <span className="text-gray-700">
+              {props.children}
+            </span>
+          </div>
+        </motion.div>
+      </motion.li>
+    );
+  }),
   
   ol: memo((props: BaseProps) => (
     <ol className="list-decimal list-inside my-4 leading-relaxed" {...props} />
@@ -192,7 +227,7 @@ const MarkdownComponents = {
   )),
 
   blockquote: memo(React.forwardRef<HTMLQuoteElement, React.BlockquoteHTMLAttributes<HTMLQuoteElement>>((props, ref) => (
-    <blockquote ref={ref} className="border-l-4 border-gray-300 pl-4 my-4 italic" {...props} />
+    <blockquote ref={ref} className="bg-slate-50 border-l-4 border-gray-300 p-4 my-4 text-md font-bold" {...props} />
   ))),
 
   table: memo((props: BaseProps) => (
