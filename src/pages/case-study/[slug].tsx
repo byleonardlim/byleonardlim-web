@@ -349,17 +349,17 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
               {prevStudy && (
                 <button
                   onClick={() => handleNavigation(`/case-study/${prevStudy.slug}`, -1)}
-                  className="group flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+                  className="group flex items-left gap-3 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <motion.div
                     whileHover={{ x: -4 }}
-                    className="flex items-center gap-2"
+                    className="flex items-left gap-2"
                   >
                     <MoveLeft className="w-6 h-6" />
                   </motion.div>
                   <div className="flex flex-col items-start">
                     <span className="text-xs text-gray-500">Previous</span>
-                    <span className="text-sm truncate">{prevStudy.title}</span>
+                    <span className="text-sm text-left">{prevStudy.title}</span>
                   </div>
                 </button>
               )}
@@ -369,7 +369,7 @@ export default function CaseStudy({ study, nextStudy, prevStudy }: CaseStudyProp
               {nextStudy && (
                 <button
                   onClick={() => handleNavigation(`/case-study/${nextStudy.slug}`, 1)}
-                  className="group flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+                  className="group flex items-left gap-3 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <div className="flex flex-col items-end">
                     <span className="text-xs text-gray-500">Next</span>

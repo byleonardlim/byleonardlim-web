@@ -55,11 +55,21 @@ export default function Home({ caseStudies }: HomeProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="p-8 lg:py-24 max-w-4xl mx-auto h-fit flex items-center justify-center"
+        className="p-8 lg:py-24 max-w-4xl mx-auto min-h-screen flex items-center justify-center"
       >
-        <h1 className="text-2xl lg:text-3xl leading-relaxed">
-        Meet Leonard: a tech enthusiast who geeks out over Spatial Computing and AI, always exploring tomorrow's technologies before they hit the mainstream. When he's not designing sleek digital products that solve real problems, you'll find him deep in code, building the future rather than just talking about it.
+        <h1 className="text-3xl lg:text-6xl font-bold uppercase leading-relaxed">
+          Building exciting AI experience 0 to 100
         </h1>
+      </motion.section>
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="p-8 lg:py-24 max-w-4xl mx-auto min-h-screen flex items-center justify-center"
+      >
+        <p className="text-2xl lg:text-3xl leading-relaxed">
+        Meet Leonard: a tech enthusiast who geeks out over Spatial Computing and AI, always exploring tomorrow's technologies before they hit the mainstream. When he's not designing sleek digital products that solve real problems, you'll find him deep in code, building the future rather than just talking about it.
+        </p>
       </motion.section>
 
       {/* Case Studies Section */}
